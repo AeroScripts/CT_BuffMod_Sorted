@@ -1,0 +1,8 @@
+## Interface: 11200
+## Version: 1.78 (CTMod 1.856)
+## Title: CT_Buffmod |cff007FFF[Colored&Sorted]|r
+## Notes: Repositions buffs and shows duration and buff names constantly. |cff00a800Updated by Fritos, then again by Scamp/Aero.|r V2.4
+## Dependencies: CT_MasterMod
+## SavedVariables: CT_BuffMod_BuffSides, CT_BuffScale, CT_BuffStyle
+CT_BuffFrame.xml
+CT_MiniBuffs.xml

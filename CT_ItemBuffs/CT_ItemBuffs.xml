@@ -1,0 +1,214 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/">
+
+	<Script file="localization.lua"/>
+	<Script file="localization.ge.lua"/>
+	<Script file="localization.fr.lua"/>
+	<Script file="CT_ItemBuffs.lua"/>
+	
+	<Button name="CT_ItemBuffButtonTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="210" y="36"/>
+		</Size>
+				<Backdrop name="$parentBackdrop" bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+			<EdgeSize>
+				<AbsValue val="12"/>
+			</EdgeSize>
+			<TileSize>
+				<AbsValue val="12"/>
+			</TileSize>
+			<BackgroundInsets>
+				<AbsInset left="2" right="2" top="2" bottom="2"/>
+			</BackgroundInsets>
+		</Backdrop>
+		<Frames>
+			<StatusBar name="$parentItemEnchantStatusBar">
+				<Size>
+					<AbsDimension x="175" y="28"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativeTo="$parent" relativePoint="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-4" y="-4"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+				<OnUpdate>
+					TempEnchantStatusBar_OnUpdate();
+				</OnUpdate>
+				<OnHide>
+					BuffStatusBar_OnHide();
+				</OnHide>
+				</Scripts>
+
+				<BarTexture file="Interface\AddOns\CT_BuffMod\Images\bg" tile="false" alphamode="BLEND"/>
+			</StatusBar>
+			<Frame setAllPoints="true">
+
+		<Layers>
+			<Layer level="ARTWORK">
+				<!-- Icon to the left of the buff button -->
+				<Texture name="$parentIcon">
+					<Size>
+						<AbsDimension x="27" y="27"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT">
+							<Offset>
+								<AbsDimension x="4" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+			</Layer>
+		<Layer level="OVERLAY">
+		
+			<Texture name="$parentItemStatusBarSpark" file="Interface\AddOns\CT_BuffMod\Images\Spark.tga" alphaMode="ADD" hidden="false">
+							<Size>
+								<AbsDimension x="64" y="36"/>
+							</Size>
+							<Anchors>
+								<Anchor point="CENTER"/>
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+							</Anchors>
+						</Texture>
+						
+				<!-- Purple buff border -->
+				<Texture name="ItemBuff" hidden="false">
+					<Size>
+						<AbsDimension x="26" y="26"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT">
+							<Offset>
+								<AbsDimension x="5" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+				<!-- Effect name text -->
+<FontString name="$parentDescribeText" font="Interface\AddOns\CT_BuffMod\CustomFonts\CTCBFont.ttf" virtual="true">
+			<Size>
+				<AbsDimension x="0" y="0" />
+			</Size>
+			<Anchors>
+			<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+				<Offset>
+					<AbsDimension x="34" y="7"/>
+				</Offset>
+            </Anchor>
+			</Anchors>
+			<FontHeight>
+				<AbsValue val="14" />
+			</FontHeight>
+			<Color r="1" g="0.82" b="0" />
+			<Shadow>
+				<Color r="0" g="0" b="0" />
+            <Offset>
+				<AbsDimension x="1" y="-1" />
+            </Offset>
+			</Shadow>
+		</FontString>
+				<!-- Effect duration text -->
+	<FontString name="$parentDurationText" font="Interface\AddOns\CT_BuffMod\CustomFonts\CTCBFont.ttf" virtual="true">
+			<Size>
+				<AbsDimension x="0" y="0" />
+			</Size>
+			<Anchors>
+			<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+				<Offset>
+					<AbsDimension x="34" y="-5"/>
+				</Offset>
+            </Anchor>
+			</Anchors>
+			<FontHeight>
+				<AbsValue val="14" />
+			</FontHeight>
+			<Color r="1" g="0.82" b="0" />
+			<Shadow>
+				<Color r="0" g="0" b="0" />
+            <Offset>
+				<AbsDimension x="1" y="-1" />
+            </Offset>
+			</Shadow>
+		</FontString>
+		
+			</Layer>
+		</Layers>
+			</Frame>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				this:SetBackdropBorderColor(.5, 0, 1);
+				this:SetBackdropColor(.5, 0, 1,.5);
+				this.type = 0;
+				this.slotid = 0;
+				this.update = 0;
+				this:Hide();
+			</OnLoad>
+			<OnEnter>
+				GameTooltip:SetOwner(this, "ANCHOR_BOTTOMLEFT");
+				GameTooltip:SetInventoryItem("player", this:GetID());
+			</OnEnter>
+			<OnLeave>
+				GameTooltip:Hide();
+			</OnLeave>
+		</Scripts>
+	</Button>
+	
+	
+	<Frame name="CT_ItemBuffFrame" parent="UIParent" hidden="false" frameStrata="LOW" toplevel="true" movable="true">
+		<Size>
+			<AbsDimension x="50" y="50"/>
+		</Size>
+		<Anchors>
+			<Anchor point="TOPLEFT" relativeTo="CT_BuffButton0" relativePoint="BOTTOMLEFT">
+				<Offset>
+					<AbsDimension x="0" y="0"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Frames>
+			<Button name="CT_ItemBuffButton1" inherits="CT_ItemBuffButtonTemplate" id="1">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="0" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CT_ItemBuffButton2" inherits="CT_ItemBuffButtonTemplate" id="2">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="CT_ItemBuffButton1" relativePoint="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="0" y="2"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				--CT_ItemBuffFrame_OnLoad();
+				this.update = 0;
+			</OnLoad>
+			<OnUpdate>
+				CT_ItemBuffFrame_OnUpdate(arg1);
+				CT_ItemBuffButton1Icon:SetTexCoord(.078, .92, .079, .937);
+				CT_ItemBuffButton2Icon:SetTexCoord(.078, .92, .079, .937);
+			</OnUpdate>
+		</Scripts>
+	</Frame>
+	
+	
+	<GameTooltip name="CT_IB_TempTooltip" inherits="GameTooltipTemplate" parent="WorldFrame" hidden="true">
+		<Scripts>
+			<OnLoad>
+				this:SetOwner(WorldFrame, "ANCHOR_NONE");
+			</OnLoad>
+		</Scripts>
+	</GameTooltip>
+</Ui>

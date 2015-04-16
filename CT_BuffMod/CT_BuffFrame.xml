@@ -1,0 +1,755 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/"> 
+
+	<Script file="localization.lua"/>
+	<Script file="localization.fr.lua"/>
+	<Script file="localization.ge.lua"/>
+	<Script file="CT_BuffFrame.lua"/>
+	
+<Button name="CT_BuffButtonTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="210" y="36"/>
+		</Size>
+			<Backdrop name="$parentBackdrop" bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+				<EdgeSize>
+					<AbsValue val="16"/>
+				</EdgeSize>
+				<TileSize>
+					<AbsValue val="16"/>
+				</TileSize>
+				<BackgroundInsets>
+					<AbsInset left="2" right="2" top="2" bottom="2"/>
+				</BackgroundInsets>
+			</Backdrop>
+		<Frames>
+			<StatusBar name="$parentBuffStatusBar">
+				<Size>
+					<AbsDimension x="175" y="28"/>
+				</Size>
+				<Anchors>
+				<Anchor point="TOPRIGHT" relativeTo="$parent" relativePoint="TOPRIGHT">
+					<Offset>
+						<AbsDimension x="-4" y="-4"/>
+					</Offset>
+				</Anchor>
+				</Anchors>
+				<BarTexture file="Interface\AddOns\CT_BuffMod\Images\bg" tile="false" alphamode="BLEND" />
+			</StatusBar>
+			<Frame setAllPoints="true">
+		<Layers>
+			<Layer level="ARTWORK">
+				<!-- Icon to the left of the buff button -->
+				<Texture name="$parentIcon">
+					<Size>
+						<AbsDimension x="27" y="27"/>
+					</Size>
+					<Anchors>
+					<Anchor point="LEFT">
+						<Offset>
+							<AbsDimension x="5" y="0"/>
+						</Offset>
+					</Anchor>
+					</Anchors>
+				</Texture>
+				<!-- Debuff Type Icon -->
+			    <Texture name="$parentDeBuffIcon" hidden="true">
+					<Size>
+						<AbsDimension x="26" y="26"/>
+					</Size>
+					<Anchors>
+					<Anchor point="RIGHT">
+						<Offset>
+							<AbsDimension x="-5" y="1"/>
+						</Offset>
+					</Anchor>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY">
+			
+			<Texture name="$parentStatusBarSpark" file="Interface\AddOns\CT_BuffMod\Images\Spark.tga" alphaMode="ADD" hidden="false">
+							<Size>
+								<AbsDimension x="64" y="36"/>
+							</Size>
+							<Anchors>
+								<Anchor point="CENTER"/>
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+							</Anchors>
+						</Texture>
+						
+				<!-- Red debuff border -->
+				<Texture name="$parentDebuff" hidden="true">
+					<Size>
+						<AbsDimension x="28" y="28"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT">
+							<Offset>
+								<AbsDimension x="5" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+				<!-- Blue buff border -->
+			    <Texture name="$parentBuff" hidden="true">
+					<Size>
+						<AbsDimension x="28" y="28"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT">
+							<Offset>
+								<AbsDimension x="5" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+					<!-- Dispell Icon -->	
+		    <Texture file="Interface\GossipFrame\AvailableQuestIcon" name="$parentDispell" hidden="true" alphamode="ADD">
+					<Size>
+						<AbsDimension x="16" y="16"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT">
+							<Offset>
+								<AbsDimension x="-12" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+				<!-- Effect name text -->
+		<FontString name="$parentDescribeText" font="Interface\AddOns\CT_BuffMod\CustomFonts\CTCBFont.ttf" virtual="true">
+			<Size>
+				<AbsDimension x="0" y="0" />
+			</Size>
+			<Anchors>
+			<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+				<Offset>
+					<AbsDimension x="34" y="7"/>
+				</Offset>
+            </Anchor>
+			</Anchors>
+			<FontHeight>
+				<AbsValue val="14" />
+			</FontHeight>
+			<Color r="1" g="0.82" b="0" />
+			<Shadow>
+				<Color r="0" g="0" b="0" />
+            <Offset>
+				<AbsDimension x="1" y="-1" />
+            </Offset>
+			</Shadow>
+		</FontString>
+		<FontString name="$parentDurationText" font="Interface\AddOns\CT_BuffMod\CustomFonts\CTCBFont.ttf" virtual="true">
+			<Size>
+				<AbsDimension x="0" y="0" />
+			</Size>
+			<Anchors>
+			<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+				<Offset>
+					<AbsDimension x="34" y="-5"/>
+				</Offset>
+            </Anchor>
+			</Anchors>
+			<FontHeight>
+				<AbsValue val="14" />
+			</FontHeight>
+			<Color r="1" g="0.82" b="0" />
+			<Shadow>
+				<Color r="0" g="0" b="0" />
+            <Offset>
+				<AbsDimension x="1" y="-1" />
+            </Offset>
+			</Shadow>
+		</FontString>
+	
+			<FontString name="$parentCount" font="Interface\AddOns\CT_BuffMod\CustomFonts\CTCBFont.ttf" outline="NORMAL" virtual="true">
+			<Size>
+				<AbsDimension x="0" y="0" />
+			</Size>
+			<Anchors>
+			<Anchor point="CENTER" relativeTo="$parentIcon" relativePoint="CENTER">
+				<Offset>
+					<AbsDimension x="0" y="0"/>
+				</Offset>
+            </Anchor>
+			</Anchors>
+			<FontHeight>
+				<AbsValue val="20" />
+			</FontHeight>
+			<Color r="1" g="1" b="1" />
+			<Shadow>
+				<Color r="0" g="0" b="0" />
+            <Offset>
+				<AbsDimension x="1" y="-1" />
+            </Offset>
+			</Shadow>
+		</FontString>
+		
+		<FontString name="$parentBuffTypeText" font="Interface\AddOns\CT_BuffMod\CustomFonts\CTCBFont.ttf" virtual="true">
+			<Size>
+				<AbsDimension x="0" y="0" />
+			</Size>
+			<Anchors>
+			<Anchor point="RIGHT">
+				<Offset>
+					<AbsDimension x="-8" y="-5"/>
+				</Offset>
+            </Anchor>
+			</Anchors>
+			<FontHeight>
+				<AbsValue val="14" />
+			</FontHeight>
+			<Color r="1" g="0.82" b="0" />
+			<Shadow>
+				<Color r="0" g="0" b="0" />
+            <Offset>
+				<AbsDimension x="1" y="-1" />
+            </Offset>
+			</Shadow>
+		</FontString>
+			</Layer>
+		</Layers>
+			</Frame>
+		</Frames>
+
+		<Scripts>
+			<OnLoad>
+				this.buffFilter = "HELPFUL|HARMFUL";
+				CT_BuffButton_OnLoad();
+			</OnLoad>
+			<OnEvent>
+				CT_BuffButton_OnEvent(event);
+			</OnEvent>
+			<OnUpdate>
+				CT_BuffButton_OnUpdate(arg1);
+			</OnUpdate>
+			<OnClick>
+				CT_BuffButton_OnClick();
+			</OnClick>
+			<OnEnter>
+				CT_BuffButton_OnEnter();
+			</OnEnter>
+			<OnLeave>
+				GameTooltip:Hide();
+			</OnLeave>
+		</Scripts>
+	</Button>
+
+<Button name="CT_SimpleBuffButtonTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="210" y="21"/>
+		</Size>
+			<Backdrop name="$parentBackdrop" bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+				<EdgeSize>
+					<AbsValue val="10"/>
+				</EdgeSize>
+				<TileSize>
+					<AbsValue val="10"/>
+				</TileSize>
+				<BackgroundInsets>
+					<AbsInset left="2" right="2" top="2" bottom="2"/>
+				</BackgroundInsets>
+			</Backdrop>
+		<Frames>
+			<StatusBar name="$parentBuffStatusBar">
+				<Size>
+					<AbsDimension x="192" y="15"/>
+				</Size>
+				<Anchors>
+				<Anchor point="TOPRIGHT" relativeTo="$parent" relativePoint="TOPRIGHT">
+					<Offset>
+						<AbsDimension x="0" y="-3"/>
+					</Offset>
+				</Anchor>
+				</Anchors>
+				<BarTexture file="Interface\AddOns\CT_BuffMod\Images\bg" tile="false" alphamode="BLEND" />
+			</StatusBar>
+			<Frame setAllPoints="true">
+		<Layers>
+			<Layer level="ARTWORK">
+				<!-- Icon to the left of the buff button -->
+				<Texture name="$parentIcon">
+					<Size>
+						<AbsDimension x="14" y="14"/>
+					</Size>
+					<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="3" y="-3"/>
+						</Offset>
+					</Anchor>
+					</Anchors>
+				</Texture>
+				<!-- Debuff Type Icon -->
+			    <Texture name="$parentDeBuffIcon" hidden="true">
+					<Size>
+						<AbsDimension x="26" y="26"/>
+					</Size>
+					<Anchors>
+					<Anchor point="RIGHT">
+						<Offset>
+							<AbsDimension x="-5" y="1"/>
+						</Offset>
+					</Anchor>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY">
+				<Texture name="$parentStatusBarSpark" file="Interface\AddOns\CT_BuffMod\Images\Spark.tga" alphaMode="ADD" hidden="false">
+							<Size>
+								<AbsDimension x="64" y="19"/>
+							</Size>
+							<Anchors>
+								<Anchor point="CENTER"/>
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+							</Anchors>
+						</Texture>
+						
+				<!-- Red debuff border -->
+				<Texture name="$parentDebuff" hidden="true">
+					<Size>
+						<AbsDimension x="28" y="28"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT">
+							<Offset>
+								<AbsDimension x="5" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+				<!-- Blue buff border -->
+			    <Texture name="$parentBuff" hidden="true">
+					<Size>
+						<AbsDimension x="28" y="28"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT">
+							<Offset>
+								<AbsDimension x="5" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+			<!-- Dispell Icon -->	
+		    <Texture file="Interface\GossipFrame\AvailableQuestIcon" name="$parentDispell" hidden="true" alphamode="ADD">
+					<Size>
+						<AbsDimension x="16" y="16"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT">
+							<Offset>
+								<AbsDimension x="-12" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+				<!-- Effect name text -->
+		<FontString name="$parentDescribeText" font="Interface\AddOns\CT_BuffMod\CustomFonts\CTCBFont.ttf" virtual="true">
+			<Size>
+				<AbsDimension x="0" y="0" />
+			</Size>
+			<Anchors>
+			<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+				<Offset>
+					<AbsDimension x="20" y="0"/>
+				</Offset>
+            </Anchor>
+			</Anchors>
+			<FontHeight>
+				<AbsValue val="14" />
+			</FontHeight>
+			<Color r="1" g="0.82" b="0" />
+			<Shadow>
+				<Color r="0" g="0" b="0" />
+            <Offset>
+				<AbsDimension x="1" y="-1" />
+            </Offset>
+			</Shadow>
+		</FontString>
+		<FontString name="$parentDurationText" font="Interface\AddOns\CT_BuffMod\CustomFonts\CTCBFont.ttf" virtual="true">
+			<Size>
+				<AbsDimension x="0" y="0" />
+			</Size>
+			<Anchors>
+			<Anchor point="RIGHT" relativeTo="$parent" relativePoint="RIGHT">
+				<Offset>
+					<AbsDimension x="-5" y="0"/>
+				</Offset>
+            </Anchor>
+			</Anchors>
+			<FontHeight>
+				<AbsValue val="14" />
+			</FontHeight>
+			<Color r="1" g="0.82" b="0" />
+			<Shadow>
+				<Color r="0" g="0" b="0" />
+            <Offset>
+				<AbsDimension x="1" y="-1" />
+            </Offset>
+			</Shadow>
+		</FontString>
+	
+			<FontString name="$parentCount" font="Interface\AddOns\CT_BuffMod\CustomFonts\CTCBFont.ttf" outline="NORMAL" virtual="true">
+			<Size>
+				<AbsDimension x="0" y="0" />
+			</Size>
+			<Anchors>
+			<Anchor point="CENTER" relativeTo="$parentIcon" relativePoint="CENTER">
+				<Offset>
+					<AbsDimension x="0" y="0"/>
+				</Offset>
+            </Anchor>
+			</Anchors>
+			<FontHeight>
+				<AbsValue val="14" />
+			</FontHeight>
+			<Color r="1" g="1" b="1" />
+			<Shadow>
+				<Color r="0" g="0" b="0" />
+            <Offset>
+				<AbsDimension x="0" y="0" />
+            </Offset>
+			</Shadow>
+		</FontString>
+		
+		<FontString name="$parentBuffTypeText" font="Interface\AddOns\CT_BuffMod\CustomFonts\CTCBFont.ttf" virtual="true">
+			<Size>
+				<AbsDimension x="0" y="0" />
+			</Size>
+			<Anchors>
+			<Anchor point="RIGHT">
+				<Offset>
+					<AbsDimension x="-8" y="-5"/>
+				</Offset>
+            </Anchor>
+			</Anchors>
+			<FontHeight>
+				<AbsValue val="14" />
+			</FontHeight>
+			<Color r="1" g="0.82" b="0" />
+			<Shadow>
+				<Color r="0" g="0" b="0" />
+            <Offset>
+				<AbsDimension x="1" y="-1" />
+            </Offset>
+			</Shadow>
+		</FontString>
+
+			</Layer>
+		</Layers>
+			</Frame>
+		</Frames>
+
+		<Scripts>
+			<OnLoad>
+				this.buffFilter = "HELPFUL|HARMFUL";
+				CT_BuffButton_OnLoad();
+			</OnLoad>
+			<OnEvent>
+				CT_BuffButton_OnEvent(event);
+			</OnEvent>
+			<OnUpdate>
+				CT_BuffButton_OnUpdate(arg1);
+			</OnUpdate>
+			<OnClick>
+				CT_BuffButton_OnClick();
+			</OnClick>
+			<OnEnter>
+				CT_BuffButton_OnEnter();
+			</OnEnter>
+			<OnLeave>
+				GameTooltip:Hide();
+			</OnLeave>
+		</Scripts>
+	</Button>
+	
+<Frame name="CT_BuffFrame" parent="UIParent" frameStrata="LOW" toplevel="false" movable="true">
+		<Size>
+			<AbsDimension x="50" y="50"/>
+		</Size>
+		<Anchors>
+			<Anchor point="BOTTOMLEFT" relativeTo="MinimapCluster" relativePoint="BOTTOMLEFT">
+				<Offset>
+					<AbsDimension x="50" y="-30"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Frames>
+			<Button name="CT_BuffButton0" inherits="CT_BuffButtonTemplate" id="0">
+
+			</Button>
+			<Button name="CT_BuffButton1" inherits="CT_BuffButtonTemplate" id="1">
+
+			</Button>
+			<Button name="CT_BuffButton2" inherits="CT_BuffButtonTemplate" id="2">
+
+			</Button>
+			<Button name="CT_BuffButton3" inherits="CT_BuffButtonTemplate" id="3">
+
+			</Button>
+			<Button name="CT_BuffButton4" inherits="CT_BuffButtonTemplate" id="4">
+
+			</Button>
+			<Button name="CT_BuffButton5" inherits="CT_BuffButtonTemplate" id="5">
+
+			</Button>
+			<Button name="CT_BuffButton6" inherits="CT_BuffButtonTemplate" id="6">
+
+			</Button>
+			<Button name="CT_BuffButton7" inherits="CT_BuffButtonTemplate" id="7">
+
+			</Button>
+			<Button name="CT_BuffButton8" inherits="CT_BuffButtonTemplate" id="8">
+
+			</Button>
+			<Button name="CT_BuffButton9" inherits="CT_BuffButtonTemplate" id="9">
+
+			</Button>
+			<Button name="CT_BuffButton10" inherits="CT_BuffButtonTemplate" id="10">
+
+			</Button>
+			<Button name="CT_BuffButton11" inherits="CT_BuffButtonTemplate" id="11">
+
+			</Button>
+			<Button name="CT_BuffButton12" inherits="CT_BuffButtonTemplate" id="12">
+
+			</Button>
+			<Button name="CT_BuffButton13" inherits="CT_BuffButtonTemplate" id="13">
+
+			</Button>
+			<Button name="CT_BuffButton14" inherits="CT_BuffButtonTemplate" id="14">
+
+			</Button>
+			<Button name="CT_BuffButton15" inherits="CT_BuffButtonTemplate" id="15">
+
+			</Button>
+			<Button name="CT_BuffButton16" inherits="CT_BuffButtonTemplate" id="16">
+
+			</Button>
+			<Button name="CT_BuffButton17" inherits="CT_BuffButtonTemplate" id="17">
+
+			</Button>
+			<Button name="CT_BuffButton18" inherits="CT_BuffButtonTemplate" id="18">
+
+			</Button>
+			<Button name="CT_BuffButton19" inherits="CT_BuffButtonTemplate" id="19">
+
+			</Button>
+			<Button name="CT_BuffButton20" inherits="CT_BuffButtonTemplate" id="20">
+
+			</Button>
+			<Button name="CT_BuffButton21" inherits="CT_BuffButtonTemplate" id="21">
+
+			</Button>
+			<Button name="CT_BuffButton22" inherits="CT_BuffButtonTemplate" id="22">
+
+			</Button>
+			<Button name="CT_BuffButton23" inherits="CT_BuffButtonTemplate" id="23">
+
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				CT_BuffFrame_OnLoad();
+				this:RegisterEvent("VARIABLES_LOADED");
+			</OnLoad>
+			<OnUpdate>
+				CT_BuffFrame_OnUpdate(arg1);
+			</OnUpdate>
+			<OnEvent>
+				if ( event == "VARIABLES_LOADED" and CT_BuffMod_BuffSides == "LEFT" ) then
+					CT_Buffs_SwapSides(1);
+				end
+			</OnEvent>
+			<OnShow>
+				if ( CT_QuestTimer_UpdatePosition ) then
+					CT_QuestTimer_UpdatePosition();
+				end
+			</OnShow>
+			<OnHide>
+				if ( CT_QuestTimer_UpdatePosition ) then
+					CT_QuestTimer_UpdatePosition();
+				end
+			</OnHide>
+		</Scripts>
+	</Frame>
+
+<Frame name="CT_SimpleBuffFrame" parent="UIParent" frameStrata="LOW" toplevel="false" movable="true" hidden="true">
+		<Size>
+			<AbsDimension x="50" y="50"/>
+		</Size>
+		<Anchors>
+			<Anchor point="BOTTOMLEFT" relativeTo="MinimapCluster" relativePoint="BOTTOMLEFT">
+				<Offset>
+					<AbsDimension x="50" y="-30"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Frames>
+			<Button name="CT_SimpleBuffButton0" inherits="CT_SimpleBuffButtonTemplate" id="0">
+
+			</Button>
+			<Button name="CT_SimpleBuffButton1" inherits="CT_SimpleBuffButtonTemplate" id="1">
+
+			</Button>
+			<Button name="CT_SimpleBuffButton2" inherits="CT_SimpleBuffButtonTemplate" id="2">
+
+			</Button>
+			<Button name="CT_SimpleBuffButton3" inherits="CT_SimpleBuffButtonTemplate" id="3">
+
+			</Button>
+			<Button name="CT_SimpleBuffButton4" inherits="CT_SimpleBuffButtonTemplate" id="4">
+
+			</Button>
+			<Button name="CT_SimpleBuffButton5" inherits="CT_SimpleBuffButtonTemplate" id="5">
+
+			</Button>
+			<Button name="CT_SimpleBuffButton6" inherits="CT_SimpleBuffButtonTemplate" id="6">
+
+			</Button>
+			<Button name="CT_SimpleBuffButton7" inherits="CT_SimpleBuffButtonTemplate" id="7">
+
+			</Button>
+			<Button name="CT_SimpleBuffButton8" inherits="CT_SimpleBuffButtonTemplate" id="8">
+
+			</Button>
+			<Button name="CT_SimpleBuffButton9" inherits="CT_SimpleBuffButtonTemplate" id="9">
+
+			</Button>
+			<Button name="CT_SimpleBuffButton10" inherits="CT_SimpleBuffButtonTemplate" id="10">
+
+			</Button>
+			<Button name="CT_SimpleBuffButton11" inherits="CT_SimpleBuffButtonTemplate" id="11">
+
+			</Button>
+			<Button name="CT_SimpleBuffButton12" inherits="CT_SimpleBuffButtonTemplate" id="12">
+
+			</Button>
+			<Button name="CT_SimpleBuffButton13" inherits="CT_SimpleBuffButtonTemplate" id="13">
+
+			</Button>
+			<Button name="CT_SimpleBuffButton14" inherits="CT_SimpleBuffButtonTemplate" id="14">
+
+			</Button>
+			<Button name="CT_SimpleBuffButton15" inherits="CT_SimpleBuffButtonTemplate" id="15">
+
+			</Button>
+			<Button name="CT_SimpleBuffButton16" inherits="CT_SimpleBuffButtonTemplate" id="16">
+
+			</Button>
+			<Button name="CT_SimpleBuffButton17" inherits="CT_SimpleBuffButtonTemplate" id="17">
+
+			</Button>
+			<Button name="CT_SimpleBuffButton18" inherits="CT_SimpleBuffButtonTemplate" id="18">
+
+			</Button>
+			<Button name="CT_SimpleBuffButton19" inherits="CT_SimpleBuffButtonTemplate" id="19">
+
+			</Button>
+			<Button name="CT_SimpleBuffButton20" inherits="CT_SimpleBuffButtonTemplate" id="20">
+
+			</Button>
+			<Button name="CT_SimpleBuffButton21" inherits="CT_SimpleBuffButtonTemplate" id="21">
+
+			</Button>
+			<Button name="CT_SimpleBuffButton22" inherits="CT_SimpleBuffButtonTemplate" id="22">
+
+			</Button>
+			<Button name="CT_SimpleBuffButton23" inherits="CT_SimpleBuffButtonTemplate" id="23">
+
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				CT_BuffFrame_OnLoad();
+				this:RegisterEvent("VARIABLES_LOADED");
+			</OnLoad>
+			<OnUpdate>
+				CT_BuffFrame_OnUpdate(arg1);
+			</OnUpdate>
+			<OnEvent>
+				if ( event == "VARIABLES_LOADED" and CT_BuffMod_BuffSides == "LEFT" ) then
+					CT_Buffs_SwapSides(1);
+				end
+			</OnEvent>
+			<OnShow>
+				if ( CT_QuestTimer_UpdatePosition ) then
+					CT_QuestTimer_UpdatePosition();
+				end
+			</OnShow>
+			<OnHide>
+				if ( CT_QuestTimer_UpdatePosition ) then
+					CT_QuestTimer_UpdatePosition();
+				end
+			</OnHide>
+		</Scripts>
+	</Frame>
+	
+<Button name="CT_BuffMod_Drag" frameStrata="LOW" parent="CT_BuffFrame" hidden="false" movable="true" toplevel="true">
+		<Size>
+			<AbsDimension x="16" y="16"/>
+		</Size>
+		<Anchors>
+			<Anchor point="BOTTOMLEFT" relativeTo="MinimapCluster" relativePoint="BOTTOMLEFT">
+				<Offset>
+					<AbsDimension x="10" y="-20"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<NormalTexture file="Interface\AddOns\CT_BuffMod\Images\DragButton"/>
+		<Scripts>
+			<OnEnter>
+				GameTooltip:SetOwner(this, "ANCHOR_LEFT");
+				GameTooltip:SetText(CT_BUFFMOD_DRAGTEXT);
+			</OnEnter>
+			<OnLeave>
+				GameTooltip:Hide();
+			</OnLeave>
+			<OnMouseDown>
+				if ( arg1 == "LeftButton" ) then
+					this:StartMoving();
+				else
+					CT_Buffs_SwapSides();
+				end
+			</OnMouseDown>
+			<OnMouseUp>
+				this:StopMovingOrSizing();
+			</OnMouseUp>
+			<OnLoad>
+				CT_LinkFrameDrag(CT_SimpleBuffButton0, this, "TOP", "BOTTOM", 0, -6);
+				CT_LinkFrameDrag(CT_BuffButton0, this, "TOP", "BOTTOM", 0, -6);
+			</OnLoad>
+		</Scripts>
+	</Button>
+<Frame name="CT_BuffGlobalFrame" parent="UIParent" hidden="false">
+		<Scripts>
+			<OnLoad>
+				this:RegisterEvent("UI_ERROR_MESSAGE");
+			</OnLoad>
+			<OnEvent>
+				CT_BuffMod_OnEvent(event);
+			</OnEvent>
+		</Scripts>
+	</Frame>
+<GameTooltip name="BTooltip" hidden="true" parent="WorldFrame" inherits="GameTooltipTemplate">
+		<Scripts>
+			<OnLoad>
+				this:SetBackdropBorderColor(TOOLTIP_DEFAULT_COLOR.r, TOOLTIP_DEFAULT_COLOR.g, TOOLTIP_DEFAULT_COLOR.b);
+				this:SetBackdropColor(TOOLTIP_DEFAULT_BACKGROUND_COLOR.r, TOOLTIP_DEFAULT_BACKGROUND_COLOR.g, TOOLTIP_DEFAULT_BACKGROUND_COLOR.b);
+				this:SetOwner(WorldFrame, "ANCHOR_NONE");
+			</OnLoad>
+		</Scripts>
+	</GameTooltip>
+<GameTooltip name="BuffModTooltip" hidden="true" parent="WorldFrame" inherits="GameTooltipTemplate">
+		<Scripts>
+			<OnLoad>
+				this:SetOwner(WorldFrame, "ANCHOR_NONE");
+			</OnLoad>
+		</Scripts>
+	</GameTooltip>
+<GameTooltip name="BDTooltip" inherits="GameTooltipTemplate" parent="UIParent" hidden="true"/>
+</Ui>

@@ -1,0 +1,6 @@
+## Interface: 11200
+## Version: 1.341 (CTMod 1.855)
+## Title: CT_ItemBuffs |cff007FFF[Colored]|r
+## Notes: Shows item buffs in the buff bar. |cff00a800Updated by Fritos.|r V2.3
+## Dependencies: CT_BuffMod, CT_MasterMod
+CT_ItemBuffs.xml
